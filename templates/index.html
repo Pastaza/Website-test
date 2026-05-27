@@ -72,7 +72,7 @@
         <h2>COMRADE DOSSIER</h2>
         <img class="avatar" src="{{ profile.avatar_url }}" alt="Avatar for {{ profile.login }}">
         <p class="name">{{ profile_name }}</p>
-        <p class="bio">{{ profile.bio.as_deref().unwrap_or("No bio yet.") }}</p>
+        <p class="bio">{{ bio_text }}</p>
         <ul class="stats">
           <li><span>Member Since</span><strong>{{ member_since }}</strong></li>
           <li><span>Followers</span><strong>{{ profile.followers }}</strong></li>

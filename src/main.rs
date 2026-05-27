@@ -59,6 +59,7 @@ struct HomeTemplate {
     profile: GitHubProfile,
     repos: Vec<RepoCard>,
     profile_name: String,
+    bio_text: String,
     member_since: String,
     stats_card_url: String,
     streak_card_url: String,
@@ -102,7 +103,10 @@ async fn styles_css() -> impl IntoResponse {
     )
 }
 
-async fn home(State(state): State<AppState>, Query(params): Query<HomeParams>) -> impl IntoResponse {
+async fn home(
+    State(state): State<AppState>,
+    Query(params): Query<HomeParams>,
+) -> impl IntoResponse {
     let requested_user = params.user.as_deref().unwrap_or(&state.default_user);
     let username = sanitize_username(requested_user).unwrap_or_else(|| state.default_user.clone());
 
@@ -127,18 +131,26 @@ async fn home(State(state): State<AppState>, Query(params): Query<HomeParams>) -
         })
         .collect::<Vec<_>>();
 
-    let profile_name = profile.name.clone().unwrap_or_else(|| profile.login.clone());
+    let profile_name = profile
+        .name
+        .clone()
+        .unwrap_or_else(|| profile.login.clone());
     let member_since = profile
         .created_at
         .split('-')
         .next()
         .unwrap_or("N/A")
         .to_string();
+    let bio_text = profile
+        .bio
+        .clone()
+        .unwrap_or_else(|| "No bio yet.".to_string());
 
     let template = HomeTemplate {
         profile,
         repos,
         profile_name,
+        bio_text,
         member_since,
         stats_card_url: format!(
             "https://github-readme-stats.vercel.app/api?username={username}&show_icons=true&hide_border=true&title_color=9f1f1f&text_color=2b2118&icon_color=9f1f1f&bg_color=f4ead2"
@@ -178,7 +190,10 @@ fn sanitize_username(input: &str) -> Option<String> {
     }
 }
 
-async fn fetch_profile(client: &reqwest::Client, username: &str) -> Result<GitHubProfile, reqwest::Error> {
+async fn fetch_profile(
+    client: &reqwest::Client,
+    username: &str,
+) -> Result<GitHubProfile, reqwest::Error> {
     client
         .get(format!("https://api.github.com/users/{username}"))
         .send()
@@ -188,7 +203,10 @@ async fn fetch_profile(client: &reqwest::Client, username: &str) -> Result<GitHu
         .await
 }
 
-async fn fetch_repos(client: &reqwest::Client, username: &str) -> Result<Vec<GitHubRepo>, reqwest::Error> {
+async fn fetch_repos(
+    client: &reqwest::Client,
+    username: &str,
+) -> Result<Vec<GitHubRepo>, reqwest::Error> {
     client
         .get(format!(
             "https://api.github.com/users/{username}/repos?sort=updated&per_page=6"
