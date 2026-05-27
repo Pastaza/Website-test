@@ -12,7 +12,7 @@
 
 body {
   margin: 0;
-  font-family: "Inter", sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: radial-gradient(circle at 20% 20%, #5d0f0f, #2c0707 60%, #170303);
   color: var(--ink);
 }
@@ -31,7 +31,7 @@ body {
 }
 
 h1, h2, h3, .banner-slogan, .quote {
-  font-family: "Oswald", sans-serif;
+  font-family: Impact, "Arial Narrow Bold", "Franklin Gothic Medium", sans-serif;
   letter-spacing: 0.04em;
 }
 
@@ -278,7 +278,7 @@ h1, h2, h3, .banner-slogan, .quote {
 
 .counter strong {
   display: block;
-  font-family: "Oswald", sans-serif;
+  font-family: Impact, "Arial Narrow Bold", "Franklin Gothic Medium", sans-serif;
   font-size: 2.1rem;
   color: var(--dark-red);
 }
@@ -288,7 +288,7 @@ h1, h2, h3, .banner-slogan, .quote {
   background: var(--red);
   color: #fff;
   text-align: center;
-  font-family: "Oswald", sans-serif;
+  font-family: Impact, "Arial Narrow Bold", "Franklin Gothic Medium", sans-serif;
   letter-spacing: 0.12em;
   padding: 0.35rem 0.5rem;
 }
