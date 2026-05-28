@@ -1,6 +1,6 @@
 # Website-test (Rust)
 
-This project is now a Rust-powered GitHub profile website inspired by a propaganda-poster GitHub layout.
+This project is a Rust-powered GitHub profile website with a clean multi-section layout.
 
 ## Run locally
 

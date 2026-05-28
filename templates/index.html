@@ -3,46 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ profile_name }} — GitHub Propaganda Board</title>
+  <title>{{ profile_name }} — Developer Website</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="poster">
-    <header class="hero panel">
-      <div class="hero-symbol">★</div>
-      <div>
-        <p class="hero-subtitle">DEVELOPED BY THE PEOPLE, FOR THE PEOPLE</p>
-        <h1>GITHUB</h1>
+  <div class="site">
+    <header class="hero">
+      <nav class="topbar">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#stats">Stats</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="hero-content">
+        <p class="kicker">Rust-powered profile website</p>
+        <h1>{{ profile_name }}</h1>
+        <p class="hero-text">{{ bio_text }}</p>
+        <div class="hero-actions">
+          <a class="button" href="{{ profile.html_url }}" target="_blank" rel="noopener noreferrer">View GitHub</a>
+          <a class="button button-secondary" href="{{ profile.html_url }}?tab=repositories" target="_blank" rel="noopener noreferrer">Explore Repos</a>
+        </div>
       </div>
-      <p class="hero-slogan">WORKERS OF THE CODE,<br><strong>UNITE!</strong></p>
     </header>
 
-    <nav class="topbar panel">
-      <a href="{{ profile.html_url }}" target="_blank" rel="noopener noreferrer">PROFILE HQ</a>
-      <a href="{{ profile.html_url }}?tab=repositories" target="_blank" rel="noopener noreferrer">REPOSITORIES</a>
-      <a href="{{ profile.html_url }}?tab=stars" target="_blank" rel="noopener noreferrer">STARRED REPOS</a>
-      <a href="{{ profile.html_url }}?tab=followers" target="_blank" rel="noopener noreferrer">FOLLOWERS</a>
-      <a href="{{ profile.html_url }}?tab=overview&from=2026-01-01&to=2026-12-31" target="_blank" rel="noopener noreferrer">ACTIVITY</a>
-      <span class="search">SEARCH THE REPUBLIC OF CODE...</span>
-    </nav>
+    <main class="content">
+      <section id="about" class="panel about">
+        <img class="avatar" src="{{ profile.avatar_url }}" alt="Avatar for {{ profile.login }}">
+        <div>
+          <h2>About</h2>
+          <p>{{ bio_text }}</p>
+          <ul class="stats-list">
+            <li><span>Member Since</span><strong>{{ member_since }}</strong></li>
+            <li><span>Followers</span><strong>{{ profile.followers }}</strong></li>
+            <li><span>Following</span><strong>{{ profile.following }}</strong></li>
+            <li><span>Public Repos</span><strong>{{ profile.public_repos }}</strong></li>
+          </ul>
+        </div>
+      </section>
 
-    <main class="layout">
-      <aside class="left panel">
-        <h2>THE CENTRAL CODE COMMITTEE</h2>
-        <ul>
-          <li><a href="{{ profile.html_url }}" target="_blank" rel="noopener noreferrer">Overview</a></li>
-          <li><a href="{{ profile.html_url }}?tab=repositories" target="_blank" rel="noopener noreferrer">Your Workbench</a></li>
-          <li><a href="{{ profile.html_url }}?tab=stars" target="_blank" rel="noopener noreferrer">Starred Repos</a></li>
-          <li><a href="https://github.com/trending" target="_blank" rel="noopener noreferrer">Collective Projects</a></li>
-          <li><a href="https://github.com/explore" target="_blank" rel="noopener noreferrer">Archived Armories</a></li>
-        </ul>
-        <div class="quote">FORK THE MEANS OF PRODUCTION</div>
-      </aside>
-
-      <section class="center">
-        <section class="panel cards">
-          <h2>REPOSITORY OF THE PEOPLE</h2>
-          <div class="card-grid">
+      <section id="projects" class="panel cards">
+        <h2>Featured repositories</h2>
+        <div class="card-grid">
             {% for repo in repos %}
             <article class="repo-card">
               <h3><a href="{{ repo.html_url }}" target="_blank" rel="noopener noreferrer">{{ repo.name }}</a></h3>
@@ -50,41 +52,32 @@
               <p class="repo-meta">{{ repo.language }} · ★ {{ repo.stars }} · Forks {{ repo.forks }}</p>
             </article>
             {% endfor %}
-          </div>
-        </section>
-
-        <section class="panel contributions">
-          <h2>CONTRIBUTION GRID OF THE MOTHERLAND</h2>
-          <img src="{{ contributions_chart_url }}" alt="GitHub contribution chart for {{ profile.login }}">
-        </section>
-
-        <section class="panel stats-wall">
-          <h2>COMMUNAL PERFORMANCE METRICS</h2>
-          <div class="stats-images">
-            <img src="{{ stats_card_url }}" alt="GitHub stats card for {{ profile.login }}">
-            <img src="{{ streak_card_url }}" alt="GitHub streak card for {{ profile.login }}">
-            <img src="{{ languages_card_url }}" alt="Top languages card for {{ profile.login }}">
-          </div>
-        </section>
+        </div>
       </section>
 
-      <aside class="right panel">
-        <h2>COMRADE DOSSIER</h2>
-        <img class="avatar" src="{{ profile.avatar_url }}" alt="Avatar for {{ profile.login }}">
-        <p class="name">{{ profile_name }}</p>
-        <p class="bio">{{ bio_text }}</p>
-        <ul class="stats">
-          <li><span>Member Since</span><strong>{{ member_since }}</strong></li>
-          <li><span>Followers</span><strong>{{ profile.followers }}</strong></li>
-          <li><span>Following</span><strong>{{ profile.following }}</strong></li>
-          <li><span>Public Repos</span><strong>{{ profile.public_repos }}</strong></li>
-        </ul>
-        <a class="cta" href="{{ profile.html_url }}" target="_blank" rel="noopener noreferrer">ENTER PROFILE HEADQUARTERS</a>
-      </aside>
+      <section id="stats" class="panel stats-wall">
+        <h2>GitHub activity</h2>
+        <div class="stats-images">
+          <img src="{{ stats_card_url }}" alt="GitHub stats card for {{ profile.login }}">
+          <img src="{{ streak_card_url }}" alt="GitHub streak card for {{ profile.login }}">
+          <img src="{{ languages_card_url }}" alt="Top languages card for {{ profile.login }}">
+        </div>
+      </section>
+
+      <section class="panel contributions">
+        <h2>Contributions</h2>
+        <img src="{{ contributions_chart_url }}" alt="GitHub contribution chart for {{ profile.login }}">
+      </section>
+
+      <section id="contact" class="panel contact">
+        <h2>Contact</h2>
+        <p>Connect with {{ profile_name }} and follow their work on GitHub.</p>
+        <a class="button" href="{{ profile.html_url }}" target="_blank" rel="noopener noreferrer">Open profile</a>
+      </section>
     </main>
 
-    <footer class="footer panel">
-      <p>ОДИН ЗА ВСЕХ, И ВСЕ ЗА КОД!</p>
+    <footer class="footer">
+      <p>Built with Rust, Axum, and Askama.</p>
     </footer>
   </div>
 </body>
